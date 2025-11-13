@@ -1,66 +1,17 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Entries DB — static viewer</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <style>
-    body { font-family: system-ui, -apple-system, sans-serif; margin: 1rem; max-width:900px; }
-    input, select, button { font-size: 1rem; padding: .5rem; }
-    .row { display:flex; gap:.5rem; margin-bottom:.5rem; align-items:center; }
-    table { width:100%; border-collapse: collapse; margin-top: 0.5rem; }
-    th, td { text-align:left; padding:.25rem .5rem; border-bottom: 1px solid #eee; }
-    pre { background:#f6f6f6; padding:.5rem; border-radius:6px; }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Static SQLite Database Test</title>
 </head>
 <body>
-  <h1>Database viewer</h1>
-  <p>Search the read-only database hosted on this page. Results fetched on-demand (sql.js-httpvfs).</p>
-
-  <div class="row">
-    <label for="mode">Search:</label>
-    <select id="mode">
-      <option value="name">Name (exact)</option>
-      <option value="like">Name (like)</option>
-      <option value="tag">Tag</option>
-      <option value="all">All (LIMIT 50)</option>
-    </select>
-    <input id="q" placeholder="search term (e.g. sunflower)" style="flex:1" />
-    <button id="run">Run</button>
-  </div>
-
-  <div id="status">Loading sqlite engine…</div>
-  <div id="results"></div>
-
-  <script type="module">
-    import initSqlJs from "https://cdn.jsdelivr.net/npm/sql.js@1.10.2/dist/sql-wasm.js";
-  
-    const DB_URL = "./database.sqlite";
-    const status = document.getElementById("status");
-    const output = document.getElementById("out");
-  
-    async function main() {
-      status.textContent = "Loading SQLite WASM…";
-      const SQL = await initSqlJs({
-        locateFile: file => `https://cdn.jsdelivr.net/npm/sql.js@1.10.2/dist/${file}`
-      });
-  
-      const data = await fetch(DB_URL).then(r => r.arrayBuffer());
-      const db = new SQL.Database(new Uint8Array(data));
-  
-      status.textContent = "Loaded DB — running query…";
-      const res = db.exec("SELECT rowid, name_en, tag FROM entries LIMIT 5;");
-      output.textContent = JSON.stringify(res, null, 2);
-      status.textContent = "Success!";
-    }
-  
-    main().catch(e => {
-      status.textContent = "Error: " + e;
-      console.error(e);
-    });
-  </script>
-
-
+  <h1>SQLite Database Host Test</h1>
+  <p>
+    If you can click and download the file below, then GitHub Pages is serving it correctly.
+  </p>
+  <p>
+    <a href="./database.sqlite" download>Download database.sqlite</a>
+  </p>
 </body>
 </html>
-
