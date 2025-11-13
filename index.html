@@ -33,95 +33,43 @@
   <div id="results"></div>
 
   <script type="module">
-    // using sql.js-httpvfs from jsDelivr
-    import initSqlJsHttpvfs from 'https://cdn.jsdelivr.net/npm/sql.js-httpvfs@0.8.12/dist/sql.js-httpvfs.mjs';
+  import initSqlJs from "https://cdn.jsdelivr.net/npm/sql.js@1.10.2/dist/sql-wasm.js";
+  import { createDbWorker } from "https://cdn.jsdelivr.net/npm/sql.js-httpvfs@0.8.12/dist/sqlite.worker.js";
 
-    async function setup() {
-      const status = document.getElementById('status');
-      const results = document.getElementById('results');
-      const qEl = document.getElementById('q');
-      const modeEl = document.getElementById('mode');
-      const runBtn = document.getElementById('run');
+  const DB_URL = "./database.sqlite";  // same folder as your HTML
+  const status = document.getElementById("status");
+  const output = document.getElementById("out");
 
-      // URL to your database file on this GitHub Pages site
-      // If you put database.sqlite in the same repo root, use a relative URL:
-      const DB_URL = './database.sqlite';
+  async function main() {
+    status.textContent = "Loading SQLite WASM engine…";
 
-      status.textContent = 'Initializing sql.js-httpvfs (WASM) — this may take a moment...';
-
-      // init library
-      const module = await initSqlJsHttpvfs({
-        // nothing to configure here for the CDN bundle; it will fetch the wasm via relative CDN path
-      });
-
-      status.textContent = 'Connecting to remote DB via HTTP-VFS...';
-
-      // Create a VFS-backed DB object that performs range requests on DB_URL.
-      // We'll use the "full" serverMode which maps to a read-only remote file.
-      const db = await module.openRemoteFile(DB_URL, { fileName: 'database.sqlite' });
-
-      status.textContent = 'Ready — try a query.';
-
-      async function runQuery(sql, params = []) {
-        results.innerHTML = '<pre>Running…</pre>';
-        try {
-          const stmt = db.prepare(sql);
-          const rows = [];
-          while (stmt.step()) {
-            rows.push(stmt.getAsObject());
+    const worker = await createDbWorker(
+      [
+        {
+          from: "inline",
+          config: {
+            serverMode: "full",
+            url: DB_URL,
+            requestChunkSize: 4096
           }
-          stmt.free();
-          renderRows(rows);
-        } catch (err) {
-          results.innerHTML = '<pre style="color:crimson">Query error: ' + String(err) + '</pre>';
-          console.error(err);
         }
-      }
+      ],
+      initSqlJs
+    );
 
-      function renderRows(rows) {
-        if (!rows.length) {
-          results.innerHTML = '<div><em>No rows</em></div>';
-          return;
-        }
-        // build table
-        const cols = Object.keys(rows[0]);
-        const thead = '<tr>' + cols.map(c => `<th>${c}</th>`).join('') + '</tr>';
-        const trs = rows.map(r => '<tr>' + cols.map(c => `<td>${escapeHtml(String(r[c] ?? ''))}</td>`).join('') + '</tr>').join('');
-        results.innerHTML = `<table><thead>${thead}</thead><tbody>${trs}</tbody></table>`;
-      }
+    status.textContent = "Database loaded — running test query…";
 
-      function escapeHtml(s) {
-        return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-      }
+    const result = await worker.db.query("SELECT rowid, name_en, tag FROM entries LIMIT 5;");
+    output.textContent = JSON.stringify(result, null, 2);
 
-      runBtn.onclick = () => {
-        const mode = modeEl.value;
-        const q = qEl.value.trim();
-        if (mode === 'all') {
-          runQuery('SELECT rowid, name_en, tag, reference FROM entries LIMIT 50;');
-          return;
-        }
-        if (!q) {
-          results.innerHTML = '<div><em>Enter a search term.</em></div>';
-          return;
-        }
-        if (mode === 'name') {
-          runQuery('SELECT rowid, name_en, tag, reference FROM entries WHERE name_en = ? LIMIT 100;', [q]);
-        } else if (mode === 'like') {
-          runQuery('SELECT rowid, name_en, tag, reference FROM entries WHERE name_en LIKE ? LIMIT 100;', ['%' + q + '%']);
-        } else if (mode === 'tag') {
-          runQuery('SELECT rowid, name_en, tag, reference FROM entries WHERE tag = ? LIMIT 200;', [q]);
-        }
-      };
+    status.textContent = "Success!";
+  }
 
-      // Run a quick default query to show something
-      runQuery('SELECT rowid, name_en, tag, reference FROM entries LIMIT 30;');
-    }
-
-    setup().catch(e => {
-      document.getElementById('status').textContent = 'Initialization failed: ' + e;
-      console.error(e);
-    });
+  main().catch(e => {
+    status.textContent = "Error: " + e.message;
+    console.error(e);
+  });
   </script>
+
 </body>
 </html>
