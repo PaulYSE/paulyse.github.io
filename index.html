@@ -1,18 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Static SQLite Database Test</title>
+  <title>CSV Viewer</title>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 </head>
 <body>
-  <h1>SQLite Database Host Test</h1>
-  <p>
-    If you can click and download the file below, then GitHub Pages is serving it correctly.
-  </p>
-  <p>
-    <a href="./wazalist.sqlite" download>Download wazalist.sqlite</a>
-  </p>
+  <h1>CSV Viewer</h1>
+  <div id="table-container"></div>
+
+  <script>
+    Papa.parse("database.csv", {
+      download: true,
+      header: true,
+      complete: function(results) {
+        const container = document.getElementById("table-container");
+        const rows = results.data;
+        if (!rows.length) return;
+        
+        // Create HTML table
+        const table = document.createElement("table");
+        table.border = "1";
+        const header = table.insertRow();
+        Object.keys(rows[0]).forEach(col => {
+          const th = document.createElement("th");
+          th.textContent = col;
+          header.appendChild(th);
+        });
+
+        rows.forEach(row => {
+          const tr = table.insertRow();
+          Object.values(row).forEach(cell => {
+            const td = tr.insertCell();
+            td.textContent = cell;
+          });
+        });
+
+        container.appendChild(table);
+      }
+    });
+  </script>
 </body>
 </html>
-
