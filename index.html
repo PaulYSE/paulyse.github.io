@@ -1,0 +1,127 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Entries DB — static viewer</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    body { font-family: system-ui, -apple-system, sans-serif; margin: 1rem; max-width:900px; }
+    input, select, button { font-size: 1rem; padding: .5rem; }
+    .row { display:flex; gap:.5rem; margin-bottom:.5rem; align-items:center; }
+    table { width:100%; border-collapse: collapse; margin-top: 0.5rem; }
+    th, td { text-align:left; padding:.25rem .5rem; border-bottom: 1px solid #eee; }
+    pre { background:#f6f6f6; padding:.5rem; border-radius:6px; }
+  </style>
+</head>
+<body>
+  <h1>Database viewer</h1>
+  <p>Search the read-only database hosted on this page. Results fetched on-demand (sql.js-httpvfs).</p>
+
+  <div class="row">
+    <label for="mode">Search:</label>
+    <select id="mode">
+      <option value="name">Name (exact)</option>
+      <option value="like">Name (like)</option>
+      <option value="tag">Tag</option>
+      <option value="all">All (LIMIT 50)</option>
+    </select>
+    <input id="q" placeholder="search term (e.g. sunflower)" style="flex:1" />
+    <button id="run">Run</button>
+  </div>
+
+  <div id="status">Loading sqlite engine…</div>
+  <div id="results"></div>
+
+  <script type="module">
+    // using sql.js-httpvfs from jsDelivr
+    import initSqlJsHttpvfs from 'https://cdn.jsdelivr.net/npm/sql.js-httpvfs@0.8.12/dist/sql.js-httpvfs.mjs';
+
+    async function setup() {
+      const status = document.getElementById('status');
+      const results = document.getElementById('results');
+      const qEl = document.getElementById('q');
+      const modeEl = document.getElementById('mode');
+      const runBtn = document.getElementById('run');
+
+      // URL to your database file on this GitHub Pages site
+      // If you put database.sqlite in the same repo root, use a relative URL:
+      const DB_URL = './database.sqlite';
+
+      status.textContent = 'Initializing sql.js-httpvfs (WASM) — this may take a moment...';
+
+      // init library
+      const module = await initSqlJsHttpvfs({
+        // nothing to configure here for the CDN bundle; it will fetch the wasm via relative CDN path
+      });
+
+      status.textContent = 'Connecting to remote DB via HTTP-VFS...';
+
+      // Create a VFS-backed DB object that performs range requests on DB_URL.
+      // We'll use the "full" serverMode which maps to a read-only remote file.
+      const db = await module.openRemoteFile(DB_URL, { fileName: 'database.sqlite' });
+
+      status.textContent = 'Ready — try a query.';
+
+      async function runQuery(sql, params = []) {
+        results.innerHTML = '<pre>Running…</pre>';
+        try {
+          const stmt = db.prepare(sql);
+          const rows = [];
+          while (stmt.step()) {
+            rows.push(stmt.getAsObject());
+          }
+          stmt.free();
+          renderRows(rows);
+        } catch (err) {
+          results.innerHTML = '<pre style="color:crimson">Query error: ' + String(err) + '</pre>';
+          console.error(err);
+        }
+      }
+
+      function renderRows(rows) {
+        if (!rows.length) {
+          results.innerHTML = '<div><em>No rows</em></div>';
+          return;
+        }
+        // build table
+        const cols = Object.keys(rows[0]);
+        const thead = '<tr>' + cols.map(c => `<th>${c}</th>`).join('') + '</tr>';
+        const trs = rows.map(r => '<tr>' + cols.map(c => `<td>${escapeHtml(String(r[c] ?? ''))}</td>`).join('') + '</tr>').join('');
+        results.innerHTML = `<table><thead>${thead}</thead><tbody>${trs}</tbody></table>`;
+      }
+
+      function escapeHtml(s) {
+        return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+      }
+
+      runBtn.onclick = () => {
+        const mode = modeEl.value;
+        const q = qEl.value.trim();
+        if (mode === 'all') {
+          runQuery('SELECT rowid, name_en, tag, reference FROM entries LIMIT 50;');
+          return;
+        }
+        if (!q) {
+          results.innerHTML = '<div><em>Enter a search term.</em></div>';
+          return;
+        }
+        if (mode === 'name') {
+          runQuery('SELECT rowid, name_en, tag, reference FROM entries WHERE name_en = ? LIMIT 100;', [q]);
+        } else if (mode === 'like') {
+          runQuery('SELECT rowid, name_en, tag, reference FROM entries WHERE name_en LIKE ? LIMIT 100;', ['%' + q + '%']);
+        } else if (mode === 'tag') {
+          runQuery('SELECT rowid, name_en, tag, reference FROM entries WHERE tag = ? LIMIT 200;', [q]);
+        }
+      };
+
+      // Run a quick default query to show something
+      runQuery('SELECT rowid, name_en, tag, reference FROM entries LIMIT 30;');
+    }
+
+    setup().catch(e => {
+      document.getElementById('status').textContent = 'Initialization failed: ' + e;
+      console.error(e);
+    });
+  </script>
+</body>
+</html>
