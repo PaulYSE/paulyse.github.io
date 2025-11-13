@@ -33,43 +33,34 @@
   <div id="results"></div>
 
   <script type="module">
-  import initSqlJs from "https://cdn.jsdelivr.net/npm/sql.js@1.10.2/dist/sql-wasm.js";
-  import { createDbWorker } from "https://cdn.jsdelivr.net/npm/sql.js-httpvfs@0.8.12/dist/sqlite.worker.js";
-
-  const DB_URL = "./database.sqlite";  // same folder as your HTML
-  const status = document.getElementById("status");
-  const output = document.getElementById("out");
-
-  async function main() {
-    status.textContent = "Loading SQLite WASM engine…";
-
-    const worker = await createDbWorker(
-      [
-        {
-          from: "inline",
-          config: {
-            serverMode: "full",
-            url: DB_URL,
-            requestChunkSize: 4096
-          }
-        }
-      ],
-      initSqlJs
-    );
-
-    status.textContent = "Database loaded — running test query…";
-
-    const result = await worker.db.query("SELECT rowid, name_en, tag FROM entries LIMIT 5;");
-    output.textContent = JSON.stringify(result, null, 2);
-
-    status.textContent = "Success!";
-  }
-
-  main().catch(e => {
-    status.textContent = "Error: " + e.message;
-    console.error(e);
-  });
+    import initSqlJs from "https://cdn.jsdelivr.net/npm/sql.js@1.10.2/dist/sql-wasm.js";
+  
+    const DB_URL = "./database.sqlite";
+    const status = document.getElementById("status");
+    const output = document.getElementById("out");
+  
+    async function main() {
+      status.textContent = "Loading SQLite WASM…";
+      const SQL = await initSqlJs({
+        locateFile: file => `https://cdn.jsdelivr.net/npm/sql.js@1.10.2/dist/${file}`
+      });
+  
+      const data = await fetch(DB_URL).then(r => r.arrayBuffer());
+      const db = new SQL.Database(new Uint8Array(data));
+  
+      status.textContent = "Loaded DB — running query…";
+      const res = db.exec("SELECT rowid, name_en, tag FROM entries LIMIT 5;");
+      output.textContent = JSON.stringify(res, null, 2);
+      status.textContent = "Success!";
+    }
+  
+    main().catch(e => {
+      status.textContent = "Error: " + e;
+      console.error(e);
+    });
   </script>
+
 
 </body>
 </html>
+
