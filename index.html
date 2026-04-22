@@ -16,8 +16,8 @@
     --accent-dim: rgba(0,201,167,0.10);
     --accent-border: rgba(0,201,167,0.28);
     --text: #e2eaf4;
-    --text-muted: #6a8ba0;
-    --text-dim: #3d5a70;
+    --text-muted: #9dbdd4;
+    --text-dim: #5a7f99;
     --grid: rgba(0,201,167,0.035);
     --mono: 'Share Tech Mono', monospace;
     --sans: 'Outfit', sans-serif;
@@ -112,13 +112,16 @@
   .project-desc { font-size: 0.875rem; color: var(--text-muted); line-height: 1.78; flex: 1; }
   .project-tech { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.1rem; }
   .project-tech span { font-family: var(--mono); font-size: 0.6rem; color: var(--text-dim); border: 1px solid rgba(0,201,167,0.12); padding: 0.15rem 0.5rem; border-radius: 2px; }
-  .project-media { margin-bottom: 1.2rem; display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .project-media { margin-bottom: 0; display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 1rem; }
   .media-link { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.08em; padding: 0.35rem 0.75rem; border-radius: 2px; text-decoration: none; transition: all 0.18s; }
-  .media-link.img { border: 1px solid rgba(0,201,167,0.25); color: var(--accent); background: var(--accent-dim); }
-  .media-link.img:hover { background: rgba(0,201,167,0.2); border-color: var(--accent); }
   .media-link.vid { border: 1px solid rgba(255,80,80,0.3); color: #ff6b6b; background: rgba(255,80,80,0.08); }
   .media-link.vid:hover { background: rgba(255,80,80,0.15); border-color: #ff6b6b; }
-  .media-placeholder { display: block; width: 100%; aspect-ratio: 16/9; background: var(--bg); border: 1px dashed rgba(0,201,167,0.2); border-radius: 2px; margin-bottom: 1.2rem; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 0.65rem; color: var(--text-dim); letter-spacing: 0.1em; text-align: center; padding: 1rem; }
+  .media-link.site { border: 1px solid rgba(0,201,167,0.25); color: var(--accent); background: var(--accent-dim); }
+  .media-link.site:hover { background: rgba(0,201,167,0.2); border-color: var(--accent); }
+  .project-thumb { width: 100%; aspect-ratio: 16/9; margin-bottom: 1.2rem; border-radius: 2px; overflow: hidden; background: var(--bg); border: 1px solid rgba(0,201,167,0.12); position: relative; }
+  .project-thumb img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+  .project-thumb iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+  .media-placeholder { width: 100%; aspect-ratio: 16/9; background: var(--bg); border: 1px dashed rgba(0,201,167,0.2); border-radius: 2px; margin-bottom: 1.2rem; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 0.65rem; color: var(--text-dim); letter-spacing: 0.1em; text-align: center; padding: 1rem; }
 
   #skills { background: var(--bg); }
   .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1.5rem; }
@@ -356,112 +359,122 @@
     </div>
     <div class="projects-grid">
 
+      <!-- PROJECT 1: NLP Robot Arm — has YouTube demo -->
       <div class="project-card">
         <div class="project-period">Sep 2024 – Apr 2025</div>
         <span class="project-tag">Capstone &middot; NLP &middot; AI</span>
         <div class="project-title">Natural Language Processing Robot Arm</div>
-        <div class="media-placeholder">[ REPLACE: imgur image link or embed ]<br>e.g. &lt;img src="https://i.imgur.com/XXXXXX.jpg"&gt;</div>
+        <div class="project-thumb">
+          <!-- REPLACE REPLACE_YT_ID_NLP with your YouTube video ID, e.g. dQw4w9WgXcQ -->
+          <iframe src="https://www.youtube.com/embed/REPLACE_YT_ID_NLP?rel=0&modestbranding=1" allowfullscreen loading="lazy"></iframe>
+        </div>
         <p class="project-desc">
           Proof-of-concept modular NLP pipeline enabling spoken natural language commands to control a collaborative
           robot arm. Integrates real-time speech transcription (RealtimeSTT), semantic parsing (spaCy),
           3D object detection (Grounding DINO), and manipulator path planning via MoveIt2 on an Omron TM5-700.
         </p>
         <div class="project-media">
-          <a href="REPLACE_WITH_IMGUR_LINK" target="_blank" class="media-link img">&#128247; Images</a>
-          <a href="REPLACE_WITH_YOUTUBE_LINK" target="_blank" class="media-link vid">&#9654; Demo Video</a>
+          <a href="https://www.youtube.com/watch?v=REPLACE_YT_ID_NLP" target="_blank" class="media-link vid">&#9654; Demo Video</a>
         </div>
         <div class="project-tech">
           <span>spaCy</span><span>Grounding DINO</span><span>MoveIt2</span><span>RealtimeSTT</span><span>ROS2</span><span>TM5-700</span>
         </div>
       </div>
 
+      <!-- PROJECT 2: Yaskawa — has YouTube demo -->
       <div class="project-card">
         <div class="project-period">May 2024 – Dec 2024</div>
         <span class="project-tag">Industrial &middot; Automation</span>
         <div class="project-title">Yaskawa Conveyor Synchronized Pick-and-Place Robot</div>
-        <div class="media-placeholder">[ REPLACE: imgur image link or embed ]<br>e.g. &lt;img src="https://i.imgur.com/XXXXXX.jpg"&gt;</div>
+        <div class="project-thumb">
+          <!-- REPLACE REPLACE_YT_ID_YASKAWA with your YouTube video ID -->
+          <iframe src="https://www.youtube.com/embed/REPLACE_YT_ID_YASKAWA?rel=0&modestbranding=1" allowfullscreen loading="lazy"></iframe>
+        </div>
         <p class="project-desc">
           Conveyor-synchronized robot arm achieving 0.1mm positional accuracy in real-time coordination.
           Programmed a centralized MP3300 controller for HMI input handling, Sigma-7 motor actuation, and
           YRC1000micro robot control. Simulated Motomini arm in Rviz; demonstrated system to clients.
         </p>
         <div class="project-media">
-          <a href="REPLACE_WITH_IMGUR_LINK" target="_blank" class="media-link img">&#128247; Images</a>
-          <a href="REPLACE_WITH_YOUTUBE_LINK" target="_blank" class="media-link vid">&#9654; Demo Video</a>
+          <a href="https://www.youtube.com/watch?v=REPLACE_YT_ID_YASKAWA" target="_blank" class="media-link vid">&#9654; Demo Video</a>
         </div>
         <div class="project-tech">
           <span>MP3300</span><span>YRC1000micro</span><span>Sigma-7</span><span>Movicon HMI</span><span>Rviz</span>
         </div>
       </div>
 
+      <!-- PROJECT 3: Smart Library — image thumbnail (no video), replace imgur URL -->
       <div class="project-card">
         <div class="project-period">Jan 2023 – Apr 2023</div>
         <span class="project-tag">Fleet Management &middot; ROS2</span>
         <div class="project-title">Smart Library Book Storage Fleet Management System</div>
-        <div class="media-placeholder"><img src="https://i.imgur.com/YAU53Fl.jpeg" alt="Image" style="max-width: 100%; max-height: 100%; object-fit: contain;"></div>
+        <div class="project-thumb">
+          <!-- REPLACE the src with your imgur image URL, e.g. https://i.imgur.com/XXXXXX.jpg -->
+          <img src="https://i.imgur.com/REPLACE_LIBRARY_IMG.jpg" alt="Smart Library Fleet Management System">
+        </div>
         <p class="project-desc">
           Scalable ROS2 fleet management system with real-time monitoring and crash detection. Realized subsystems
           on a UR10 robot arm for pick-and-place and an AgileX SCOUT UGV for autonomous storage navigation.
           Custom end-effector designed and fabricated for variable book dimensions. Full Gazebo simulation built for integration testing.
         </p>
-        <div class="project-media">
-          <a href="https://i.imgur.com/YAU53Fl.jpeg" target="_blank" class="media-link img">&#128247; Images</a>
-          <a href="REPLACE_WITH_YOUTUBE_LINK" target="_blank" class="media-link vid">&#9654; Demo Video</a>
-        </div>
         <div class="project-tech">
           <span>ROS2</span><span>Gazebo</span><span>UR10</span><span>AgileX SCOUT</span><span>C++</span>
         </div>
       </div>
 
+      <!-- PROJECT 4: Self-Driving Car — image thumbnail (no video), replace imgur URL -->
       <div class="project-card">
         <div class="project-period">May 2022 – Aug 2022</div>
         <span class="project-tag">Autonomous &middot; Navigation</span>
         <div class="project-title">C++ ROS Self-Driving Robot Car</div>
-        <div class="media-placeholder">[ REPLACE: imgur image link or embed ]<br>e.g. &lt;img src="https://i.imgur.com/XXXXXX.jpg"&gt;</div>
+        <div class="project-thumb">
+          <!-- REPLACE the src with your imgur image URL -->
+          <img src="https://i.imgur.com/REPLACE_SELFDRIVE_IMG.jpg" alt="C++ ROS Self-Driving Robot Car">
+        </div>
         <p class="project-desc">
           Waypoint-based self-navigating robot on AgileX LIMO — a multi-modal platform with track chains,
           LiDAR, ToF sensors, and Intel RealSense for 3D visual feedback. Implemented road detection for
           smart steering. Designed, simulated, and 3D-printed a terrain model for development and testing.
         </p>
-        <div class="project-media">
-          <a href="https://i.imgur.com/g0yMMFH.jpg" target="_blank" class="media-link img">&#128247; Images</a>
-          <a href="REPLACE_WITH_YOUTUBE_LINK" target="_blank" class="media-link vid">&#9654; Demo Video</a>
-        </div>
         <div class="project-tech">
           <span>ROS</span><span>C++</span><span>LiDAR</span><span>SLAM</span><span>Intel RealSense</span><span>AgileX LIMO</span>
         </div>
       </div>
 
+      <!-- PROJECT 5: Follow Me Robot — image thumbnail (no video), replace imgur URL -->
       <div class="project-card">
         <div class="project-period">Sep 2021 – Apr 2022</div>
         <span class="project-tag">Tele-operation &middot; Vision</span>
         <div class="project-title">Semi-Autonomous Follow Me Robot Car</div>
-        <div class="media-placeholder">[ REPLACE: imgur image link or embed ]<br>e.g. &lt;img src="https://i.imgur.com/XXXXXX.jpg"&gt;</div>
+        <div class="project-thumb">
+          <!-- REPLACE the src with your imgur image URL -->
+          <img src="https://i.imgur.com/REPLACE_FOLLOWME_IMG.jpg" alt="Semi-Autonomous Follow Me Robot Car">
+        </div>
         <p class="project-desc">
           Four-wheel differential drive robot with mecanum wheels for omnidirectional movement. PixyCam2
           for real-time RGB colour-space object detection and tracking. Ultrasonic and ToF sensors for crash
           and cliff edge avoidance. Digi Xbee DigiMesh for remote wireless operation.
         </p>
-        <div class="project-media">
-          <a href="https://i.imgur.com/VLjTif2.jpg" target="_blank" class="media-link img">&#128247; Images</a>
-          <a href="REPLACE_WITH_YOUTUBE_LINK" target="_blank" class="media-link vid">&#9654; Demo Video</a>
-        </div>
         <div class="project-tech">
           <span>C++</span><span>PixyCam2</span><span>Xbee DigiMesh</span><span>ToF Sensors</span><span>OpenCV</span>
         </div>
       </div>
 
+      <!-- PROJECT 6: Pathfinder Website — image thumbnail, live site link -->
       <div class="project-card">
         <div class="project-period">Team Pathfinder</div>
         <span class="project-tag">Web &middot; Documentation</span>
         <div class="project-title">Team Pathfinder Project Gallery Website</div>
-        <!-- <div class="media-placeholder">[ REPLACE: imgur screenshot or remove this block ]<br>e.g. &lt;img src="https://i.imgur.com/XXXXXX.jpg"&gt;</div> -->
+        <div class="project-thumb">
+          <!-- REPLACE with a screenshot of the site, or use the imgur team photo -->
+          <img src="https://i.imgur.com/29pAh3I.jpg" alt="Team Pathfinder Website">
+        </div>
         <p class="project-desc">
           Designed and built the official Team Pathfinder website documenting the team's full robotics learning
           journey and project gallery throughout their undergraduate programme at SIT. Hosted on GitHub Pages.
         </p>
         <div class="project-media">
-          <a href="https://rse-pathfinder.github.io/Pathfinder-website" target="_blank" class="media-link img">&#127758; Live Site</a>
+          <a href="https://rse-pathfinder.github.io/Pathfinder-website" target="_blank" class="media-link site">&#127758; Live Site</a>
         </div>
         <div class="project-tech">
           <span>HTML</span><span>CSS</span><span>GitHub Pages</span>
