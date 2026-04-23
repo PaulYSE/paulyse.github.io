@@ -189,168 +189,36 @@
   footer p { font-family: var(--mono); font-size: 0.67rem; color: var(--text-dim); letter-spacing: 0.07em; }
 
   /* WOTAGEI TEASER */
-  #wotagei {
-    background: #0a0608;
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
-  }
-  #wotagei::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(255,60,120,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,60,120,0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
-    pointer-events: none;
-  }
-  .wotagei-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 6rem 4rem;
-    position: relative;
-    z-index: 1;
-  }
-  .wotagei-eyebrow {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: #ff6eb0;
-    margin-bottom: 0.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-  .wotagei-eyebrow::before {
-    content: '';
-    display: inline-block;
-    width: 2rem; height: 1px;
-    background: #ff6eb0;
-  }
-  .wotagei-heading {
-    font-size: clamp(2rem, 4.5vw, 3.8rem);
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    line-height: 1.08;
-    margin-bottom: 1.5rem;
-    color: #f0dce8;
-  }
+  #wotagei { background: #0a0608; position: relative; overflow: hidden; z-index: 1; }
+  #wotagei::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,60,120,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,60,120,0.03) 1px, transparent 1px); background-size: 40px 40px; pointer-events: none; }
+  .wotagei-inner { max-width: 1100px; margin: 0 auto; padding: 6rem 4rem; position: relative; z-index: 1; }
+  .wotagei-eyebrow { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; color: #ff6eb0; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.75rem; }
+  .wotagei-eyebrow::before { content: ''; display: inline-block; width: 2rem; height: 1px; background: #ff6eb0; }
+  .wotagei-heading { font-size: clamp(2rem, 4.5vw, 3.8rem); font-weight: 600; letter-spacing: -0.02em; line-height: 1.08; margin-bottom: 1.5rem; color: #f0dce8; }
   .wotagei-heading span { color: #ff6eb0; }
-  .wotagei-body {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 5rem;
-    align-items: center;
-    margin-top: 3.5rem;
-  }
-  .wotagei-text p {
-    font-size: 1rem;
-    color: #9a8090;
-    line-height: 1.9;
-    margin-bottom: 1.2rem;
-  }
+  .wotagei-body { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; margin-top: 3.5rem; }
+  .wotagei-text p { font-size: 1rem; color: #9a8090; line-height: 1.9; margin-bottom: 1.2rem; }
   .wotagei-text p strong { color: #c9aab8; font-weight: 500; }
-  .wotagei-stats {
-    display: flex;
-    gap: 2.5rem;
-    margin-top: 2rem;
-    flex-wrap: wrap;
-  }
-  .w-stat {}
-  .w-stat-num {
-    font-family: var(--mono);
-    font-size: 2.2rem;
-    color: #ff6eb0;
-    display: block;
-    line-height: 1;
-    margin-bottom: 0.3rem;
-  }
-  .w-stat-label {
-    font-size: 0.75rem;
-    color: #6a4a58;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-  }
-  .wotagei-cta-wrap {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1.5rem;
-  }
-  .wotagei-badge {
-    font-family: var(--mono);
-    font-size: 0.65rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: #6a4a58;
-    border: 1px solid rgba(255,110,176,0.15);
-    padding: 0.3rem 0.8rem;
-    border-radius: 2px;
-  }
-  .wotagei-card {
-    width: 100%;
-    border: 1px solid rgba(255,110,176,0.2);
-    background: rgba(255,110,176,0.04);
-    border-radius: 3px;
-    padding: 2rem;
-    position: relative;
-    overflow: hidden;
-  }
-  .wotagei-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0;
-    width: 3px; height: 100%;
-    background: #ff6eb0;
-  }
-  .wotagei-card-title {
-    font-size: 1rem;
-    font-weight: 500;
-    color: #f0dce8;
-    margin-bottom: 0.5rem;
-  }
-  .wotagei-card-sub {
-    font-size: 0.85rem;
-    color: #9a8090;
-    line-height: 1.7;
-    margin-bottom: 1.2rem;
-  }
-  .btn-wotagei {
-    font-family: var(--mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 0.75rem 1.6rem;
-    border-radius: 2px;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    transition: all 0.2s;
-    border: 1px solid rgba(255,110,176,0.4);
-    color: #ff6eb0;
-    background: transparent;
-  }
-  .btn-wotagei:hover {
-    background: rgba(255,110,176,0.1);
-    border-color: #ff6eb0;
-    transform: translateY(-1px);
-  }
-  .wotagei-coming-soon {
-    font-family: var(--mono);
-    font-size: 0.65rem;
-    color: #4a3040;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-top: 0.6rem;
-  }
-
-  @media (max-width: 900px) {
-    .wotagei-body { grid-template-columns: 1fr; gap: 2.5rem; }
-    .wotagei-inner { padding-left: 1.5rem; padding-right: 1.5rem; }
-  }
+  .wotagei-stats { display: flex; gap: 2.5rem; margin-top: 2rem; flex-wrap: wrap; }
+  .w-stat-num { font-family: var(--mono); font-size: 2.2rem; color: #ff6eb0; display: block; line-height: 1; margin-bottom: 0.3rem; }
+  .w-stat-label { font-size: 0.75rem; color: #6a4a58; text-transform: uppercase; letter-spacing: 0.1em; }
+  .w-perf-list { display: flex; flex-direction: column; gap: 0; margin-top: 0; }
+  .w-perf-item { display: grid; grid-template-columns: 70px 1fr; gap: 1rem; padding: 0.9rem 0; border-bottom: 1px solid rgba(255,110,176,0.08); }
+  .w-perf-item:last-child { border-bottom: none; }
+  .w-perf-date { font-family: var(--mono); font-size: 0.65rem; color: #6a4a58; letter-spacing: 0.06em; padding-top: 3px; line-height: 1.5; }
+  .w-perf-title { font-size: 0.9rem; font-weight: 500; color: #c9aab8; margin-bottom: 0.15rem; line-height: 1.3; }
+  .w-perf-venue { font-family: var(--mono); font-size: 0.68rem; color: #6a4a58; margin-bottom: 0.4rem; }
+  .w-perf-roles { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+  .w-perf-roles span { font-family: var(--mono); font-size: 0.6rem; color: #ff6eb0; border: 1px solid rgba(255,110,176,0.25); padding: 0.12rem 0.45rem; border-radius: 2px; background: rgba(255,110,176,0.05); }
+  .wotagei-cta-wrap { display: flex; flex-direction: column; align-items: flex-start; gap: 1.5rem; position: sticky; top: 6rem; }
+  .wotagei-badge { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: #6a4a58; border: 1px solid rgba(255,110,176,0.15); padding: 0.3rem 0.8rem; border-radius: 2px; }
+  .wotagei-card { width: 100%; border: 1px solid rgba(255,110,176,0.2); background: rgba(255,110,176,0.04); border-radius: 3px; padding: 2rem; position: relative; overflow: hidden; }
+  .wotagei-card::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: #ff6eb0; }
+  .wotagei-card-title { font-size: 1rem; font-weight: 500; color: #f0dce8; margin-bottom: 0.5rem; }
+  .wotagei-card-sub { font-size: 0.85rem; color: #9a8090; line-height: 1.7; margin-bottom: 1.2rem; }
+  .btn-wotagei { font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.75rem 1.6rem; border-radius: 2px; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.2s; border: 1px solid rgba(255,110,176,0.4); color: #ff6eb0; background: transparent; }
+  .btn-wotagei:hover { background: rgba(255,110,176,0.1); border-color: #ff6eb0; transform: translateY(-1px); }
+  .wotagei-coming-soon { font-family: var(--mono); font-size: 0.65rem; color: #4a3040; letter-spacing: 0.12em; text-transform: uppercase; margin-top: 0.6rem; }
 
   @media (max-width: 900px) {
     nav { padding: 1rem 1.5rem; }
@@ -365,6 +233,9 @@
     .timeline-dot { left: -2px; }
     .timeline-date { text-align: left; padding-right: 0; }
     footer { flex-direction: column; gap: 0.5rem; padding: 1.5rem; text-align: center; }
+    .wotagei-body { grid-template-columns: 1fr; gap: 2.5rem; }
+    .wotagei-cta-wrap { position: static; }
+    .wotagei-inner { padding-left: 1.5rem; padding-right: 1.5rem; }
   }
 </style>
 </head>
@@ -785,9 +656,9 @@
       <div>
         <div class="extra-section-title">Co-Curricular Activities</div>
         <div class="activity-item">
-          <div class="activity-role">Founder</div>
+          <div class="activity-role">Co-Founder &amp; Active Member</div>
           <div class="activity-org">IFX Wotagei (Cyalume Dance Group)</div>
-          <div class="activity-date">2016 – Present</div>
+          <div class="activity-date">2018 – Present &nbsp;·&nbsp; Member since 2016 (Tengoku Parade)</div>
         </div>
         <div class="activity-item">
           <div class="activity-role">Vice President (Academics)</div>
@@ -898,32 +769,85 @@
 
       <div class="wotagei-text">
         <p>
-          Before the robots, before the code — there was the glow of a cyalume stick cutting through the dark.
-          I've been practising <strong>wotagei</strong> for over a decade: a performance art form
-          originating from Japanese idol culture, combining choreographed stick-light routines
-          with call-and-response crowd energy.
+          <strong>Wotagei</strong> — loosely translating to "Dance of the Idol Otaku" — is a performance
+          art originating in Japanese idol and live performance culture, combining synchronized choreography,
+          rhythmic movement, expressive performance, and cyalumes (light sticks).
         </p>
         <p>
-          In 2016, I founded <strong>IFX Wotagei</strong>, a Cyalume dance group that has since grown into
-          a community of performers across Singapore. Precision, timing, and the ability to move
-          as one with a crowd — skills that translate further than most people expect.
+          I began in 2016 as a member of <strong>Tengoku Parade</strong>, the group that pioneered wotagei
+          in Singapore. In 2018 I co-founded <strong>IFX Wotagei</strong>, a Singapore-based wotagei
+          performance group, and have since mentored and trained multiple generations of members across
+          Singapore's polytechnics — including complete beginners with no prior dance background.
         </p>
         <p>
-          I'm building a dedicated dance portfolio — the same care and detail I put into this
-          engineering site, applied to a completely different stage.
+          From the Esplanade Outdoor Theatre to the Sands Theatres, I've taken on roles as choreographer,
+          performance coordinator, trainer, and performer across major stages in Singapore.
+          I'm building a dedicated dance portfolio to document this journey properly.
         </p>
         <div class="wotagei-stats">
           <div class="w-stat">
-            <span class="w-stat-num">10+</span>
-            <span class="w-stat-label">Years of Wotagei</span>
+            <span class="w-stat-num">9+</span>
+            <span class="w-stat-label">Years Active</span>
           </div>
           <div class="w-stat">
-            <span class="w-stat-num">2016</span>
-            <span class="w-stat-label">Founded IFX Wotagei</span>
+            <span class="w-stat-num">2018</span>
+            <span class="w-stat-label">Co-founded IFX Wotagei</span>
           </div>
           <div class="w-stat">
-            <span class="w-stat-num">SG</span>
-            <span class="w-stat-label">Based in Singapore</span>
+            <span class="w-stat-num">5</span>
+            <span class="w-stat-label">Featured Performances</span>
+          </div>
+        </div>
+
+        <div style="margin-top: 2.5rem;">
+          <div style="font-family:var(--mono); font-size:0.68rem; color:#ff6eb0; letter-spacing:0.18em; text-transform:uppercase; margin-bottom:1.2rem; padding-bottom:0.5rem; border-bottom:1px solid rgba(255,110,176,0.2);">Featured Live Performances</div>
+          <div class="w-perf-list">
+
+            <div class="w-perf-item">
+              <div class="w-perf-date">Jul 2025</div>
+              <div class="w-perf-detail">
+                <div class="w-perf-title">MY FIRST STORY Asia Tour 2025</div>
+                <div class="w-perf-venue">Sands Theatres</div>
+                <div class="w-perf-roles"><span>Choreographer</span><span>Performer</span></div>
+              </div>
+            </div>
+
+            <div class="w-perf-item">
+              <div class="w-perf-date">Jan 2025</div>
+              <div class="w-perf-detail">
+                <div class="w-perf-title">NUS Japanese Cultural Festival Night 2025</div>
+                <div class="w-perf-venue">NUS UTown</div>
+                <div class="w-perf-roles"><span>Choreographer</span><span>Performer</span></div>
+              </div>
+            </div>
+
+            <div class="w-perf-item">
+              <div class="w-perf-date">Nov 2022</div>
+              <div class="w-perf-detail">
+                <div class="w-perf-title">Soundtracks 2022 — DBS Foundation</div>
+                <div class="w-perf-venue">Esplanade Outdoor Theatre</div>
+                <div class="w-perf-roles"><span>Coordinator</span><span>Choreographer</span><span>Trainer</span><span>Performer</span></div>
+              </div>
+            </div>
+
+            <div class="w-perf-item">
+              <div class="w-perf-date">Apr 2022</div>
+              <div class="w-perf-detail">
+                <div class="w-perf-title">Squad Game — DBS Foundation</div>
+                <div class="w-perf-venue">Esplanade Outdoor Theatre</div>
+                <div class="w-perf-roles"><span>Coordinator</span><span>Choreographer</span><span>Trainer</span><span>Performer</span></div>
+              </div>
+            </div>
+
+            <div class="w-perf-item">
+              <div class="w-perf-date">Feb 2018</div>
+              <div class="w-perf-detail">
+                <div class="w-perf-title">NUS Japanese Cultural Festival Night 2018</div>
+                <div class="w-perf-venue">NUS UTown</div>
+                <div class="w-perf-roles"><span>Performer</span></div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -933,8 +857,9 @@
         <div class="wotagei-card">
           <div class="wotagei-card-title">IFX Wotagei — Coming Soon</div>
           <div class="wotagei-card-sub">
-            A dedicated portfolio documenting 10+ years of performance, choreography, and community
-            building through Cyalume dance. Videos, events, and the story behind the lights.
+            A dedicated portfolio documenting 9+ years of performance, choreography, and community
+            building through Cyalume dance — from polytechnic practice sessions to the Sands Theatres.
+            Videos, events, and the story behind the lights.
           </div>
           <a href="#" class="btn-wotagei">Stay Tuned ↗</a>
           <div class="wotagei-coming-soon">// portfolio under construction</div>
